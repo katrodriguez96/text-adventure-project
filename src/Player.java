@@ -13,4 +13,13 @@ public class Player {
     public Player(String name) {
         this.playerName = name;
     }
+
+    public void setStats(int HP, int AC, String Class, String Race, int initMod){
+        this.playerMaxHP = HP;
+        this.playerHP = HP;
+        this.playerAC = AC;
+        this.playerClass = Class;
+        this.playerRace = Race;
+        this.playerInitiativeMod = initMod;
+    }
 }

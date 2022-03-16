@@ -2,20 +2,9 @@ import java.util.Scanner;
 
 public class Game {
     public static Scanner sc = new Scanner(System.in);
-    // "Character sheet"
-    public static String playerName;
-    public static int playerMaxHP; // hp will never exceed this number. not bothering with temp hit points
-    public static int playerHP; // this hp will be affected by battle
-    public static int playerAC;
-    public static String playerClass;
-    public static String playerRace;
-    public static int playerInitiativeMod;
-    public static String playerArmor;
-    public static int potionsHeld = 3;
-    public static int potionHealing = 10;
+    public static Player user;
 
-    // Game constructor
-    public Game () {
+    public static void newGame() {
         characterSheet();
         boolean userContinue = false;
         do {
@@ -24,8 +13,8 @@ public class Game {
             if (userInput.equalsIgnoreCase("y") || userInput.equalsIgnoreCase("yes")) {
                 userContinue = true;
             } else if (userInput.equalsIgnoreCase("n") || userInput.equalsIgnoreCase("no")) {
-                playerName = null;
-                Game newGame = new Game();
+                user = null;
+                newGame();
             } else {
                 System.out.println("\nInvalid input, try again.");
             }
@@ -36,46 +25,37 @@ public class Game {
         System.out.println("\t\t\t#############################");
         System.out.println("\t\t\t# WELCOME TO THE ADVENTURE! #");
         System.out.println("\t\t\t#############################");
-        Game newGame = new Game();
+        newGame();
         startAdventure();
     }
 
     // fills out "character sheet" on first call, displays info on all other calls
     public static void characterSheet() {
-        if (playerName == null) {
+        do {
             System.out.println("\nChoose your adventurer:");
             System.out.println("1. Half-Orc Barbarian 2. Halfling Rogue 3. Human Wizard");
             String userChoice = sc.nextLine();
             if (userChoice.equals("1") || userChoice.equalsIgnoreCase("half-orc") || userChoice.equalsIgnoreCase("barbarian")) {
-                playerMaxHP = 14;
-                playerHP = playerMaxHP;
-                playerAC = 13;
-                playerClass = "Barbarian";
-                playerRace = "Half-Orc";
-                playerInitiativeMod = 1;
+                System.out.println("\nEnter your adventurer's name:");
+                String inputName = sc.nextLine();
+                user = new Player(inputName);
+                user.setStats(14, 13, "Barbarian", "Half-Orc", 1);
             } else if (userChoice.equals("2") || userChoice.equalsIgnoreCase("halfling") || userChoice.equalsIgnoreCase("rogue")) {
-                playerMaxHP = 8;
-                playerHP = playerMaxHP;
-                playerAC = 14;
-                playerClass = "Rogue";
-                playerRace = "Halfling";
-                playerInitiativeMod = 3;
-                playerArmor = "leather armor";
+                System.out.println("\nEnter your adventurer's name:");
+                String inputName = sc.nextLine();
+                user = new Player(inputName);
+                user.setStats(8, 14, "Rogue", "Halfling", 3);
+                user.playerArmor = "leather armor";
             } else if (userChoice.equals("3") || userChoice.equalsIgnoreCase("human") || userChoice.equalsIgnoreCase("wizard")) {
-                playerMaxHP = 8;
-                playerHP = playerMaxHP;
-                playerAC = 12;
-                playerClass = "Wizard";
-                playerRace = "Human";
-                playerInitiativeMod = 2;
+                System.out.println("\nEnter your adventurer's name:");
+                String inputName = sc.nextLine();
+                user = new Player(inputName);
+                user.setStats(8, 12, "Wizard", "Human", 2);
             } else {
                 System.out.println("\nInvalid input, try again.");
-                characterSheet();
             }
-            System.out.println("\nEnter your adventurer's name:");
-            playerName = sc.nextLine();
-        }
-        System.out.printf("\nYour name is %s, a %s %s.\nYour max HP is %d and your AC is %d.\n", playerName, playerRace, playerClass, playerHP, playerAC);
+        } while (user == null);
+        System.out.printf("\nYour name is %s, a %s %s.\nYour max HP is %d and your AC is %d.\n", user.playerName, user.playerRace, user.playerClass, user.playerHP, user.playerAC);
     }
 
     public static void startAdventure() {

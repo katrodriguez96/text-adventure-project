@@ -55,7 +55,7 @@ public class Game {
                 System.out.println("\nInvalid input, try again.");
             }
         } while (user == null);
-        System.out.printf("\nYour name is %s, a %s %s.\nYour max HP is %d and your AC is %d.\n", user.playerName, user.playerRace, user.playerClass, user.playerHP, user.playerAC);
+        System.out.printf("\nYour name is %s, a %s %s.\nYour max HP is %d and your AC is %d.\n", user.name, user.race, user.dndClass, user.HP, user.AC);
     }
 
     public static void startAdventure() {

@@ -45,7 +45,7 @@ public class Game {
                 String inputName = sc.nextLine();
                 user = new Player(inputName);
                 user.setStats(8, 14, "Rogue", "Halfling", 3);
-                user.playerArmor = "leather armor";
+                user.armor = "leather armor";
             } else if (userChoice.equals("3") || userChoice.equalsIgnoreCase("human") || userChoice.equalsIgnoreCase("wizard")) {
                 System.out.println("\nEnter your adventurer's name:");
                 String inputName = sc.nextLine();
@@ -72,5 +72,36 @@ public class Game {
             System.out.println("\nInput invalid, try again.");
             startAdventure();
         }
+    }
+
+    public static void firstBattle() {
+        System.out.println("Suddenly, a screech pierces the air as a goblin jumps out at you from it's perch in a tree.\nYou are under attack!");
+        Goblin goblin = new Goblin();
+        System.out.println("Time to roll for initiative!");
+        System.out.println("Press [R] to roll the dice.");
+        String initRoll = sc.nextLine();
+        if (initRoll.equalsIgnoreCase("r")) {
+            int playerInit = rollDie(20) + user.initMod;
+            System.out.println("You rolled a " + playerInit);
+            int goblinInit = rollDie(20) + goblin.initMod;
+            System.out.println("The goblin rolled a " + goblinInit);
+            if (playerInit > goblinInit) {
+                System.out.println("You were faster than the goblin, and attack first.");
+                // give user attack options? or just one attack option?
+            } else if (goblinInit > playerInit) {
+                System.out.println("The goblin was faster than you, and strikes first.");
+                System.out.println("The goblin rushes you and attempts to slash you with his scimitar.");
+                int goblinAttack = rollDie(20) + 4;
+                if (goblinAttack > user.AC) {
+                    int goblinDmg = rollDie(6) + 2;
+                    System.out.printf("The attack hits! You take %d points of damage.", goblinDmg);
+                    // loop through attack until either goblin hp or player hp reach 0
+                }
+            }
+        }
+    }
+
+    public static int rollDie(int sides) {
+        return (int) (Math.random() * sides + 1);
     }
 }
